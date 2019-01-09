@@ -1,0 +1,29 @@
+{% extends "bootstrap/base.html" %}
+{% import "bootstrap/utils.html" as utils %}
+
+{% block title %}TODO List{% endblock %}
+
+{% block navbar %}
+    <nav class="navbar navbar-inverse container">
+        <div class="navbar-header"><a class="navbar-brand" href="{{ url_for('web.show_todo_list') }}">TODO</a></div>
+        <!-- logout links -->
+        {% if current_user.is_authenticated %}
+            <ul class="nav navbar-nav pull-right">
+                <li><a class="btn" href="{{ url_for('web.logout') }}">logout</a></li>
+            </ul>
+        {% endif %}
+    </nav>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <!-- flash message -->
+        {% with messages = get_flashed_messages(with_categories=True) %}
+            {% if messages %}
+                {{ utils.flashed_messages(messages,dismissible=True) }}
+            {% endif %}
+        {% endwith %}
+        <!-- body block -->
+        {% block page_content %} {% endblock %}
+    </div>
+{% endblock %}
